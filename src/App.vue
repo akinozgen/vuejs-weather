@@ -50,8 +50,8 @@ export default {
         .then(geoLocationObject => {
           // lat={lat}&lon={lon}
           // geoLocationObject.coords.latitude|longitude
-          if (!geoLocationObject.hasOwnProperty('coords') ||
-              !geoLocationObject.coords.hasOwnProperty('latitude')) {
+          if (!Object.prototype.hasOwnProperty.call(geoLocationObject, 'coords') ||
+              !Object.prototype.hasOwnProperty.call.hasOwnProperty(geoLocationObject.coords, 'latitude')) {
             return;
           }
 
