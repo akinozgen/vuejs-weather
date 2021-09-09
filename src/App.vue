@@ -20,8 +20,13 @@
 
 <script>
 import moment from 'moment';
+import getCurrentLocation from './helpers/getGeolocation';
 import 'moment/dist/locale/tr';
 moment.locale('tr');
+
+getCurrentLocation()
+    .then(i => console.log(i))
+    .catch(i => console.log(i));
 
 export default {
   name: 'App',
