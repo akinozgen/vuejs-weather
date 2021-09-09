@@ -8,7 +8,7 @@ export default function () {
       rej(error);
     }, {
       enableHighAccuracy: true,
-      timeout: 1000
+      timeout: 10000
     });
   });
 }
