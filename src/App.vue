@@ -44,6 +44,9 @@ export default {
       isWarm: false
     };
   },
+  mounted() {
+    this.getLocation();
+  }
   methods: {
     getLocation() {
       getCurrentLocation()
