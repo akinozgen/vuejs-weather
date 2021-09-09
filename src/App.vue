@@ -46,7 +46,7 @@ export default {
   },
   mounted() {
     this.getLocation();
-  }
+  },
   methods: {
     getLocation() {
       getCurrentLocation()
