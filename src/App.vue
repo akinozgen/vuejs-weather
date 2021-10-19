@@ -20,6 +20,7 @@
 
 <script>
 import moment from 'moment';
+import getCurrentLocation from './helpers/getGeolocation';
 import 'moment/dist/locale/tr';
 moment.locale('tr');
 
@@ -30,6 +31,10 @@ export default {
       api_key: '25918dbf0f39d4568328272961e4f151',
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query: '',
+      geoLocation: {
+        lat: 0,
+        lng: 0
+      },
       weather: {
         locationName: 'Antalya, TR',
         date: 'Pazartesi, 6 Ağustos 2020',
@@ -39,11 +44,35 @@ export default {
       isWarm: false
     };
   },
+  mounted() {
+    this.getLocation();
+  },
   methods: {
-    fetchWeather(e) {
-      if (e.key !== 'Enter') return;
+    getLocation() {
+      getCurrentLocation()
+        .then(geoLocationObject => {
+          // lat={lat}&lon={lon}
+          // geoLocationObject.coords.latitude|longitude
+          if (!geoLocationObject.hasOwnProperty('coords') ||
+              !geoLocationObject.coords.hasOwnProperty('latitude')) {
+            return;
+          }
 
-      fetch(`${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}&lang=TR`)
+          const { latitude, longitude } = geoLocationObject;
+
+          this.geoLocation.lat = latitude;
+          this.geoLocation.lng = longitude;
+          this.fetchWeather({}, true);
+        });
+    },
+    fetchWeather(e, fromLocation = false) {
+      if (e.key !== 'Enter' && fromLocation === false) return;
+      let url = `${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}&lang=TR`;
+      if (fromLocation) {
+        url =`${this.url_base}weather?lat=${this.geoLocation.lat}&lng=${this.geoLocation.lng}&units=metric&appid=${this.api_key}&lang=TR`;
+      }
+
+      fetch(url)
       .then(res => res.json())
       .then(res => {
         this.weather.locationName = res.name;
