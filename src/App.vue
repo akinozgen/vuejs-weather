@@ -51,25 +51,21 @@ export default {
     getLocation() {
       getCurrentLocation()
         .then(geoLocationObject => {
-          // lat={lat}&lon={lon}
-          // geoLocationObject.coords.latitude|longitude
-          if (!geoLocationObject.hasOwnProperty('coords') ||
-              !geoLocationObject.coords.hasOwnProperty('latitude')) {
-            return;
-          }
-
-          const { latitude, longitude } = geoLocationObject;
-
+          
+          const { latitude, longitude } = geoLocationObject.coords;
           this.geoLocation.lat = latitude;
           this.geoLocation.lng = longitude;
           this.fetchWeather({}, true);
-        });
+        })
+        .catch(err => {
+          console.log(err);
+        })
     },
     fetchWeather(e, fromLocation = false) {
       if (e.key !== 'Enter' && fromLocation === false) return;
       let url = `${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}&lang=TR`;
       if (fromLocation) {
-        url =`${this.url_base}weather?lat=${this.geoLocation.lat}&lng=${this.geoLocation.lng}&units=metric&appid=${this.api_key}&lang=TR`;
+        url =`${this.url_base}weather?lat=${this.geoLocation.lat}&lon=${this.geoLocation.lng}&units=metric&appid=${this.api_key}&lang=TR`;
       }
 
       fetch(url)
