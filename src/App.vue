@@ -31,7 +31,7 @@ export default {
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query: '',
       weather: {
-        locationName: 'Tekirdağ, TR',
+        locationName: 'Antalya, TR',
         date: 'Pazartesi, 6 Ağustos 2020',
         temp: '12°C',
         status: 'Yağmurlu'
