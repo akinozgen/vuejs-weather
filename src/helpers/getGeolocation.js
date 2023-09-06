@@ -11,4 +11,20 @@ export default function () {
       timeout: 10000
     });
   });
+
+  /*
+    Demo:
+
+    getCurrentLocation()
+        .then(geoLocationObject => {
+          
+          const { latitude, longitude } = geoLocationObject.coords;
+          this.geoLocation.lat = latitude; // enlem
+          this.geoLocation.lng = longitude; // boylam
+          this.fetchWeather({}, true);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+  */
 }
